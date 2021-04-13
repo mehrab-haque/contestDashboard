@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { useHistory } from "react-router-dom";
+import {BrowserRouter,Route} from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import DashboardHome from "./dashboard/Home";
+import AdminHome from "./admin/Home";
+
+var showToast
 
 function App() {
+
+  const history=useHistory()
+
+  showToast=message=>{
+    toast.dark(message, {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+        />
+        <BrowserRouter history={history}>
+          <Route path = "/" exact component={DashboardHome}/>
+          <Route path = "/admin" exact component={AdminHome}/>
+        </BrowserRouter>
+      </div>
   );
 }
 
 export default App;
+export {showToast}
